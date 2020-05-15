@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3cab627b-3316-46bd-b088-3f49ea0da827/resourceGroups/test_web_app/providers/Microsoft.Web/sites/test-web-app-2020",
+    "appService.deploySubpath": ""
+}
