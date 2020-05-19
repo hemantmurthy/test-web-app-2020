@@ -1,11 +1,37 @@
-const http = require('http');
+const fs = require('fs');
+const express = require('express');
+const appjwt = require("./auth/jwt.js");
 
-const server = http.createServer((request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello Azure World from VS Code with some updates!!!");
+const app = express();
+
+app.get("/", (req, res) => {
+    res.json({
+        message: "Welcome to the Jungle"
+    });
 });
 
-const port = process.env.PORT || 1337;
-server.listen(port);
+app.post("/login", (req, res) => {
+    // Authenticate user ...
+    let user = {
+        id: "123980983982",
+        username: "krishna",
+        email: "krishna@dwarkanet.com"
+    }
 
-console.log("Server running at port %d", port);
+    appjwt.generate(user, res);
+});
+
+app.get("/protected", (req, res, next) => {
+    appjwt.verify(req, res, next);    
+}, (req, res) => {
+    res.json({
+        message: "Permitted",
+        authData: req.auth_data
+    });
+});
+
+const appPort = process.env.PORT || 3000;
+console.log("Starting app on port " + appPort);
+app.listen(appPort, () => {
+    console.log("Application started successfully");
+});
