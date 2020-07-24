@@ -25,7 +25,7 @@ app.get("/protected", (req, res, next) => {
     appjwt.verify(req, res, next);    
 }, (req, res) => {
     res.json({
-        message: "Permitted",
+        message: "Authorized",
         authData: req.auth_data
     });
 });
